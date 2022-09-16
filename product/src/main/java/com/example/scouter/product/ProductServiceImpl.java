@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +15,26 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
+
+    @Transactional
+    @Override
+    public int createProducts() {
+
+        final int productCount = 20;
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
+        for (int i = 0; i < productCount; i++) {
+            Product product = Product.builder()
+                    .no("product_" + now + "_" + i)
+                    .name("상품" + now + "_" + i)
+                    .build();
+
+            productRepository.save(product);
+        }
+
+        return productCount;
+    }
 
 
     @Override

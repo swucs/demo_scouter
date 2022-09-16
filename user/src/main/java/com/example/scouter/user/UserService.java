@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
     @Transactional
-    void createUser(UserDto userDto);
+    int createUsers();
 
     List<UserDto> getAllUsers();
 }

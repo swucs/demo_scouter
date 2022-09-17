@@ -1,4 +1,5 @@
 rootProject.name = 'demo_scouter'
+
 include 'user'
 include 'product'
 include 'batch'

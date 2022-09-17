@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +33,17 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return productCount;
+    }
+
+
+    @Override
+    public ProductDto getProductById(long id) {
+        Product product = productRepository.findById(id).orElseGet(() -> null);
+        if (product == null) {
+            return null;
+        }
+
+        return product.toProductDto();
     }
 
 

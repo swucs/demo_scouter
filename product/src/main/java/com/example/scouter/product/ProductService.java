@@ -8,5 +8,7 @@ public interface ProductService {
     @Transactional
     int createProducts();
 
+    ProductDto getProductById(long id);
+
     List<ProductDto> getAllProducts();
 }

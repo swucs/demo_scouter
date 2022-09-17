@@ -16,6 +16,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final ProductClient productClient;
+
 
     @Transactional
     @Override
@@ -42,8 +44,15 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
 
         return users.stream()
-                .map(u -> u.toUserDto())
+                .map(u -> {
+                    UserDto userDto = u.toUserDto();
+                    ProductDto product = productClient.getProduct(u.getId());
+                    if (product != null) {
+                        userDto.setProductNo(product.getNo());
+                        userDto.setProductName(product.getName());
+                    }
+                    return userDto;
+                })
                 .collect(Collectors.toList());
     }
-
 }

@@ -11,6 +11,10 @@ Accept: application/json
 GET http://localhost:8089/api/products
 Accept: application/json
 
+### GET request get products
+GET http://localhost:8089/api/product/1
+Accept: application/json
+
 ### GET request create products
 POST http://localhost:8089/api/products
 Accept: application/json

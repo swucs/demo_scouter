@@ -2,7 +2,7 @@
 GET http://localhost:8088/api/users
 Accept: application/json
 
-### GET request create users
+### POST create users
 POST http://localhost:8088/api/users
 Accept: application/json
 
@@ -15,7 +15,7 @@ Accept: application/json
 GET http://localhost:8089/api/product/1
 Accept: application/json
 
-### GET request create products
+### POST request create products
 POST http://localhost:8089/api/products
 Accept: application/json
 

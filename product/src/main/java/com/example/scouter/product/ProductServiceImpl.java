@@ -38,12 +38,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(long id) {
-        Product product = productRepository.findById(id).orElseGet(() -> null);
-        if (product == null) {
-            return null;
-        }
-
-        return product.toProductDto();
+//        Product product = productRepository.findById(id).orElseGet(() -> null);
+//        if (product == null) {
+//            return null;
+//        }
+//
+//        return product.toProductDto();
+        return productRepository.findById(id).get().toProductDto();
     }
 
 

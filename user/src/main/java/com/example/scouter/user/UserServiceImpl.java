@@ -1,22 +1,26 @@
 package com.example.scouter.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ProductClient productClient;
+    private final RestTemplate restTemplate;
 
 
     @Transactional
@@ -46,10 +50,17 @@ public class UserServiceImpl implements UserService {
         return users.stream()
                 .map(u -> {
                     UserDto userDto = u.toUserDto();
-                    ProductDto product = productClient.getProduct(u.getId());
-                    if (product != null) {
-                        userDto.setProductNo(product.getNo());
-                        userDto.setProductName(product.getName());
+
+                    try {
+                        ResponseEntity<ProductDto> response
+                                = restTemplate.getForEntity("http://localhost:8089/api/product/" + u.getId(), ProductDto.class);
+                        if (response.getStatusCode() == HttpStatus.OK) {
+                            ProductDto product = response.getBody();
+                            userDto.setProductNo(product.getNo());
+                            userDto.setProductName(product.getName());
+                        }
+                    } catch (Exception e) {
+                        log.error("", e);
                     }
                     return userDto;
                 })

@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class ProductJob {
@@ -20,10 +22,10 @@ public class ProductJob {
 //        int createdCount = productClient.createProducts();
 //        System.out.println("createdProductCount : " + createdCount);
 
-        ResponseEntity<Integer> response
-                = restTemplate.postForEntity("http://localhost:8089/api/products", null, Integer.class);
+        ResponseEntity<List> response
+                = restTemplate.getForEntity("http://localhost:8089/api/products", List.class);
         if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("createdProductCount : " + response.getBody());
+            System.out.println("Products : " + response.getBody());
         }
     }
 }

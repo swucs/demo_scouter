@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class UserJob {
@@ -22,10 +24,10 @@ public class UserJob {
     public void scheduleUserCreator() {
 //        int createdCount = userClient.createUsers();
 //        System.out.println("createdUserCount : " + createdCount);
-        ResponseEntity<Integer> response
-                = restTemplate.postForEntity("http://localhost:8088/api/users", null, Integer.class);
+        ResponseEntity<List> response
+                = restTemplate.getForEntity("http://localhost:8088/api/users", List.class);
         if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("createdUserCount : " + response.getBody());
+            System.out.println("users : " + response.getBody());
         }
     }
 }
